@@ -212,5 +212,24 @@ namespace PortalStudenti.Servicies
                 return teacher;
             }
         }
+        public static List<ModelStudenti> getProfileMembers()
+        {
+            {
+                AdministratorRepository up = new AdministratorRepository();
+                List<ModelStudenti> listaMembrii = null;
+                try
+                {
+
+
+                    listaMembrii = up.getProfileMembers();
+                }
+                catch (Exception ex)
+                {
+                    //mesajele de eroare se logheaz in baza de date intr-o tabela de log-uri
+                    var mesajEroare = ex.Message + "-" + ex.InnerException; ;
+                }
+                return listaMembrii;
+            }
+        }
     }
 }

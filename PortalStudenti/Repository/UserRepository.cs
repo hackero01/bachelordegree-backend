@@ -40,7 +40,9 @@ namespace PortalStudenti.Repository
                         bool conectat = bool.Parse(reader["conectat"].ToString());
                         string statut = reader["statut"].ToString();
                         int idRol = Int32.Parse(reader["id_rol"].ToString());
-                        user = new ModelUtilizatori(idUtilizator, nume, prenume, email, parola, adresa, numarTelefon, conectat, statut, idRol);
+                        string numeMaterie = "george";
+                        string denumireRol = reader["denumire"].ToString();
+                        user = new ModelUtilizatori(idUtilizator, nume, prenume, email, parola, adresa, numarTelefon, conectat, statut, idRol, numeMaterie,denumireRol);
 
                         if (pass == user.parola)
                         {
@@ -117,6 +119,10 @@ namespace PortalStudenti.Repository
                         if (conectat)
                         {
                             result = "con";
+                        }
+                        else
+                        {
+                            result= "decon";
                         }
 
                     }
@@ -220,6 +226,62 @@ namespace PortalStudenti.Repository
             }
 
             return testing1;
+        }
+        public ModelUtilizatori getAllUserInformation(int idUtilizator)
+        {
+
+            SqlConnection conn = db.initializare();
+            ModelUtilizatori user = null;
+
+
+
+            try
+            {
+                cmd = new SqlCommand(Query.getAllUserInformation, conn);
+                cmd.Parameters.Add(new SqlParameter("idUtilizator", idUtilizator));
+                reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+
+
+                    while (reader.Read())
+                    {
+                        idUtilizator = Int32.Parse(reader["id_utilizator"].ToString());
+                        string nume = reader["nume"].ToString();
+                        string prenume = reader["prenume"].ToString();
+                        string email = reader["email"].ToString();
+                        string parola = reader["parola"].ToString();
+                        string adresa = reader["adresa"].ToString();
+                        string numarTelefon = reader["nr_telefon"].ToString();
+                        bool conectat = bool.Parse(reader["conectat"].ToString());
+                        string statut = reader["statut"].ToString();
+                        int idRol = Int32.Parse(reader["id_rol"].ToString());
+                        string numeMaterie = "george";
+                        string denumireRol = reader["denumire"].ToString();
+                        user = new ModelUtilizatori(idUtilizator, nume, prenume, email, parola, adresa, numarTelefon, conectat, statut, idRol, numeMaterie, denumireRol);
+
+     
+                    }
+
+                }
+                else
+                {
+                    user = new ModelUtilizatori();
+                    user.statusConectare = "Utilizator inexistent";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
+                conn.Dispose();
+                conn.Close();
+            }
+            return user;
         }
 
 

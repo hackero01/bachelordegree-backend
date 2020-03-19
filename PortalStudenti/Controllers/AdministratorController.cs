@@ -204,5 +204,17 @@ namespace PortalStudenti.Controllers
             return Json(AdministratorServicies.teacherDetails(id)); // index pags
 
         }
+        [System.Web.Http.HttpGet]
+        [System.Web.Script.Services.ScriptMethod(UseHttpGet = true)]
+        [System.Web.Http.Route("api/getProfilesMembers")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+
+
+        public IHttpActionResult getProfilesMembers()
+        {
+
+            return Json(AdministratorServicies.getProfileMembers()); // index pags
+
+        }
     }
 }

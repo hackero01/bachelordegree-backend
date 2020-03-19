@@ -18,8 +18,24 @@ namespace PortalStudenti.Models
         public string statut;
         public string statusConectare;
         public int idRol;
+        public string numeMaterie;
+        public string denumireRol;
 
-
+        public ModelUtilizatori(int idUtilizator, string nume, string prenume, string email, string parola, string adresa, string numarTelefon, bool conectat, string statut, int idRol,string numeMaterie,string denumireRol)
+        {
+            this.idUtilizator = idUtilizator;
+            this.nume = nume;
+            this.prenume = prenume;
+            this.email = email;
+            this.parola = parola;
+            this.adresa = adresa;
+            this.numarTelefon = numarTelefon;
+            this.conectat = conectat;
+            this.statut = statut;
+            this.idRol = idRol;
+            this.numeMaterie = numeMaterie;
+            this.denumireRol = denumireRol;
+        }
         public ModelUtilizatori(int idUtilizator, string nume, string prenume, string email, string parola, string adresa, string numarTelefon, bool conectat, string statut, int idRol)
         {
             this.idUtilizator = idUtilizator;
@@ -32,9 +48,8 @@ namespace PortalStudenti.Models
             this.conectat = conectat;
             this.statut = statut;
             this.idRol = idRol;
-
+            
         }
-
         public ModelUtilizatori(string nume, string prenume, string email, string parola, string adresa, string numarTelefon) // pt editare informatii
         {
             this.nume = nume;

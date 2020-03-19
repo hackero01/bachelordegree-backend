@@ -28,11 +28,11 @@ namespace PortalStudenti.Controllers
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("api/userLogOut")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IHttpActionResult userLogOut([FromBody] LogoutModel usr)
+        public IHttpActionResult userLogOut([FromUri] int idUtilizator)
         {
 
             UserServicies us = new UserServicies();
-            us.checkIfConnected(usr.idUtilizator);
+            us.checkIfConnected(idUtilizator);
             return Ok();
 
         }
@@ -44,6 +44,15 @@ namespace PortalStudenti.Controllers
             UserServicies us = new UserServicies();
             us.updateData(usr);
             return Ok();
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("api/getAllUserInformation")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult getAllUserInformation([FromUri] int idUtilizator)
+        {
+            UserServicies us = new UserServicies();
+           return Json(us.getAllUserInformation(idUtilizator));
+           
         }
     }
 }

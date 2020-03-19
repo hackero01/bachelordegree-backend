@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static PortalStudenti.Models.ModelUtilizatori;
 
 namespace PortalStudenti.Servicies
 {
@@ -19,6 +20,13 @@ namespace PortalStudenti.Servicies
                 up.updateLogin(user.idUtilizator, true);
 
             }
+            return user;
+        }
+        public  ModelUtilizatori getAllUserInformation(int idUtilizator)
+        {
+            UserRepository up = new UserRepository();
+            ModelUtilizatori user = null;
+            user = up.getAllUserInformation(idUtilizator);
             return user;
         }
         public void checkIfConnected(int idUtilizator)

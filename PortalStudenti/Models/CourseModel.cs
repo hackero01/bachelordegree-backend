@@ -16,6 +16,9 @@ namespace PortalStudenti.Models
         public int anStudiu;
         public int idUtilizator;
 
+        // pt verificare ce materie preda
+        public string numeSpecializare;
+       
         public CourseModel(int idMaterie,string numeMaterie,int idSpecializare,int numarCredite, int semestru,int anStudiu,int idUtilizator)
         {
            this.idMaterie = idMaterie;
@@ -25,6 +28,17 @@ namespace PortalStudenti.Models
             this.semestru = semestru;
             this.anStudiu = anStudiu;
             this.idUtilizator = idUtilizator;
+        }
+        public CourseModel(int idMaterie, string numeMaterie, int idSpecializare, int numarCredite, int semestru, int anStudiu, int idUtilizator,string numeSpecializare)
+        {
+            this.idMaterie = idMaterie;
+            this.numeMaterie = numeMaterie;
+            this.idSpecializare = idSpecializare;
+            this.numarCredite = numarCredite;
+            this.semestru = semestru;
+            this.anStudiu = anStudiu;
+            this.idUtilizator = idUtilizator;
+            this.numeSpecializare = numeSpecializare;
         }
     }
 }

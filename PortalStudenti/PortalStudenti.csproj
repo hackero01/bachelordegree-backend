@@ -151,6 +151,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseModel.cs" />
+    <Compile Include="Models\EvidentaParticipantiMaterii.cs" />
     <Compile Include="Models\ModelAnunturi.cs" />
     <Compile Include="Models\ModelRoluri.cs" />
     <Compile Include="Models\ModelSpecializari.cs" />

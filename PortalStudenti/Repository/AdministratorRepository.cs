@@ -1,6 +1,7 @@
 ﻿using PortalStudenti.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -22,6 +23,28 @@ namespace PortalStudenti.Repository
             try
             {
                 cmd = new SqlCommand(Query.countAccount, conn);
+                count = (int)cmd.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
+                conn.Dispose();
+                conn.Close();
+            }
+            return count;
+        }
+        public int countTeachers()
+        {
+            SqlConnection conn = db.initializare();
+            SqlCommand cmd;
+            int count = 0;
+            try
+            {
+                cmd = new SqlCommand(Query.countTeachers, conn);
                 count = (int)cmd.ExecuteScalar();
             }
             catch (Exception ex)
@@ -58,6 +81,7 @@ namespace PortalStudenti.Repository
             }
             return count;
         }
+      
         public string creeazaUser(ModelUtilizatori newAcc)
         {
             SqlConnection conn = db.initializare();
@@ -66,16 +90,18 @@ namespace PortalStudenti.Repository
 
             try
             {
-                cmd = new SqlCommand(Query.createAccount, conn);
+                cmd = new SqlCommand("insertAnewAccAndANewStudent", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 //cmd.Parameters.Add(new SqlParameter("idSpecializare", specializare.idSpecializare));
-                cmd.Parameters.Add(new SqlParameter("nume", newAcc.nume));
-                cmd.Parameters.Add(new SqlParameter("prenume", newAcc.prenume));
-                cmd.Parameters.Add(new SqlParameter("email", newAcc.email));
-                cmd.Parameters.Add(new SqlParameter("parola", newAcc.parola));
-                cmd.Parameters.Add(new SqlParameter("adresa", newAcc.adresa));
-                cmd.Parameters.Add(new SqlParameter("idRol", newAcc.idRol));
-                cmd.Parameters.Add(new SqlParameter("conectat", newAcc.conectat));
-                cmd.Parameters.Add(new SqlParameter("numarTelefon", newAcc.numarTelefon));
+                cmd.Parameters.Add(new SqlParameter("@nume", newAcc.nume));
+                cmd.Parameters.Add(new SqlParameter("@prenume", newAcc.prenume));
+                cmd.Parameters.Add(new SqlParameter("@email", newAcc.email));
+                cmd.Parameters.Add(new SqlParameter("@parola", newAcc.parola));
+                cmd.Parameters.Add(new SqlParameter("@adresa", newAcc.adresa));
+                cmd.Parameters.Add(new SqlParameter("@idRol", newAcc.idRol));
+                cmd.Parameters.Add(new SqlParameter("@conectat", newAcc.conectat));
+                cmd.Parameters.Add(new SqlParameter("@nrTelefon", newAcc.numarTelefon));
+                cmd.Parameters.Add(new SqlParameter("@idSpecializare", newAcc.idSpecializare));
 
 
                 if (cmd.ExecuteNonQuery() == 1)
@@ -156,6 +182,7 @@ namespace PortalStudenti.Repository
 
 
         }
+      
         public ModelUtilizatori detaliiCont(int idUtilizator)
         {
             SqlConnection conn = db.initializare();
@@ -221,7 +248,7 @@ namespace PortalStudenti.Repository
 
             try
             {
-                cmd = new SqlCommand(Query.stergeCont, conn);
+                cmd = new SqlCommand(Query.stergeExamen, conn);
                 cmd.Parameters.Add(new SqlParameter("id_utilizator", cont.idUtilizator));
 
                 cmd.ExecuteNonQuery();
@@ -327,6 +354,8 @@ namespace PortalStudenti.Repository
 
             return mesaj;
         }
+      
+    
         public List<ModelSpecializari> incarcaSpecializari()
         {
             SqlConnection conn = db.initializare();
@@ -509,7 +538,7 @@ namespace PortalStudenti.Repository
             return mesaj;
         }
    
-        public List<ModelStudenti> getProfileMembers()
+        public List<ModelStudenti> getProfileMembers(int idSpecializare)
         {
             SqlConnection conn = db.initializare();
             SqlCommand cmd;
@@ -518,7 +547,7 @@ namespace PortalStudenti.Repository
             try
             {
                 cmd = new SqlCommand(Query.incarcaMembriiSpecializari, conn);
-
+                cmd.Parameters.Add(new SqlParameter("idSpecializare", idSpecializare));
                 reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -528,14 +557,14 @@ namespace PortalStudenti.Repository
                     {
 
                         int id = Int32.Parse(reader["id"].ToString());
-                        int idSpecializare = Int32.Parse(reader["id_specializare"].ToString());
+                        idSpecializare = Int32.Parse(reader["id_specializare"].ToString());
                         int idUtilizator = Int32.Parse(reader["id_utilizator"].ToString());
                         int nrCredite = Int32.Parse(reader["nr_credite"].ToString());
                         int anStudiu = Int32.Parse(reader["an_studiu"].ToString());
                         string nume = reader["nume"].ToString();
                         string prenume = reader["prenume"].ToString();
                         string numeSpecializare = reader["nume_specializare"].ToString();
-                        membrii = new ModelStudenti(id, idSpecializare, idUtilizator, nrCredite, anStudiu, nume, prenume, numeSpecializare);
+                        membrii = new ModelStudenti(id, idUtilizator, idSpecializare, nrCredite, anStudiu, nume, prenume, numeSpecializare);
                         listaMembrii.Add(membrii);
 
 
@@ -790,7 +819,55 @@ namespace PortalStudenti.Repository
 
 
         }
+        public List<CourseModel> getAllCourseByIdOfType(int idSpecializare)
+        {
+            SqlConnection conn = db.initializare();
+            SqlCommand cmd;
+            List<CourseModel> listaConturi = new List<CourseModel>();
+            CourseModel cont = null;
+            try
+            {
+                cmd = new SqlCommand(Query.selectAllCourseById, conn);
+                cmd.Parameters.Add(new SqlParameter("idSpecializare", idSpecializare));
+                reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
 
+
+                    while (reader.Read())
+                    {
+                        int idMaterie = Int32.Parse(reader["id_materie"].ToString());
+                        
+                        idSpecializare = Int32.Parse(reader["id_specializare"].ToString());
+                      
+                        int idUtilizator = Int32.Parse(reader["id_utilizator"].ToString());
+
+                        cont = new CourseModel(idMaterie, idSpecializare, idUtilizator);
+                        listaConturi.Add(cont);
+
+
+                    }
+
+                }
+                else
+                {
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
+                conn.Dispose();
+                conn.Close();
+            }
+            return listaConturi;
+
+        }
 
     }
 }

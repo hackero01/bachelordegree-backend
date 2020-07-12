@@ -25,6 +25,14 @@ namespace PortalStudenti.Servicies
             return count;
 
         }
+        public int countTeachers(int count)
+        {
+            AdministratorRepository us = new AdministratorRepository();
+            count = us.countTeachers();
+            return count;
+
+        }
+        
         public string creeazaUser(ModelUtilizatori newAcc)
         {
             AdministratorRepository spec = new AdministratorRepository();
@@ -84,12 +92,14 @@ namespace PortalStudenti.Servicies
             return testing1;
 
         }
+       
         public string creeazaSpecializare(ModelSpecializari specializare)
         {
             AdministratorRepository spec = new AdministratorRepository();
             string mesaj = spec.creeazaSpecializare(specializare);
             return mesaj;
         }
+        
         public static List<ModelSpecializari> incarcaSpecializare()
         {
             {
@@ -212,7 +222,7 @@ namespace PortalStudenti.Servicies
                 return teacher;
             }
         }
-        public static List<ModelStudenti> getProfileMembers()
+        public static List<ModelStudenti> getProfileMembers(int idSpecializare)
         {
             {
                 AdministratorRepository up = new AdministratorRepository();
@@ -221,7 +231,7 @@ namespace PortalStudenti.Servicies
                 {
 
 
-                    listaMembrii = up.getProfileMembers();
+                    listaMembrii = up.getProfileMembers(idSpecializare);
                 }
                 catch (Exception ex)
                 {
@@ -229,6 +239,26 @@ namespace PortalStudenti.Servicies
                     var mesajEroare = ex.Message + "-" + ex.InnerException; ;
                 }
                 return listaMembrii;
+            }
+        }
+        public static List<CourseModel> getAllCourseByIdOfType(int idSpecializare)
+        {
+            {
+                AdministratorRepository up = new AdministratorRepository();
+                
+                List<CourseModel> listaConturi = null;
+                try
+                {
+
+
+                    listaConturi = up.getAllCourseByIdOfType(idSpecializare);
+                }
+                catch (Exception ex)
+                {
+                    //mesajele de eroare se logheaz in baza de date intr-o tabela de log-uri
+                    var mesajEroare = ex.Message + "-" + ex.InnerException; ;
+                }
+                return listaConturi;
             }
         }
     }

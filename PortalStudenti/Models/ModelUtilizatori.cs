@@ -20,7 +20,13 @@ namespace PortalStudenti.Models
         public int idRol;
         public string numeMaterie;
         public string denumireRol;
+        public string anStudiu;
 
+
+        // 
+        public int idSpecializare;
+        public int numarCredite;
+   
         public ModelUtilizatori(int idUtilizator, string nume, string prenume, string email, string parola, string adresa, string numarTelefon, bool conectat, string statut, int idRol,string numeMaterie,string denumireRol)
         {
             this.idUtilizator = idUtilizator;
@@ -64,7 +70,12 @@ namespace PortalStudenti.Models
             this.idUtilizator = idUtilizator;
             this.conectat = conectat;
         }
-
+        public ModelUtilizatori(string nume,string prenume,string anStudiu)
+        {
+            this.nume = nume;
+            this.prenume = prenume;
+            this.anStudiu = anStudiu;
+        }
         public ModelUtilizatori()
         {
         }

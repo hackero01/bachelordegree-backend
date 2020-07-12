@@ -7,7 +7,7 @@ namespace PortalStudenti.Models
 {
     public class CourseModel
     {
-     
+
         public int idMaterie;
         public string numeMaterie;
         public int idSpecializare;
@@ -38,6 +38,25 @@ namespace PortalStudenti.Models
             this.semestru = semestru;
             this.anStudiu = anStudiu;
             this.idUtilizator = idUtilizator;
+            this.numeSpecializare = numeSpecializare;
+        }
+        public CourseModel(int idMaterie,int idSpecializare,int idUtilizator)
+        {
+            this.idUtilizator = idUtilizator;
+            this.idMaterie = idMaterie;
+            this.idSpecializare = idSpecializare;
+        }
+        public CourseModel(int idMaterie, int idSpecializare, string numeMaterie)
+        {
+            this.numeMaterie = numeMaterie;
+            this.idMaterie = idMaterie;
+            this.idSpecializare = idSpecializare;
+        }
+        public CourseModel(int idMaterie, int idSpecializare, string numeMaterie,string numeSpecializare)
+        {
+            this.numeMaterie = numeMaterie;
+            this.idMaterie = idMaterie;
+            this.idSpecializare = idSpecializare;
             this.numeSpecializare = numeSpecializare;
         }
     }

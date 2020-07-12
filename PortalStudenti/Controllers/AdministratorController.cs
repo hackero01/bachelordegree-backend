@@ -30,7 +30,7 @@ namespace PortalStudenti.Controllers
 
         }
         [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("api/getNumberOfCourse")]
+        [System.Web.Http.Route("api/getNumberOfPrograms")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
 
 
@@ -40,6 +40,21 @@ namespace PortalStudenti.Controllers
             AdministratorServicies us = new AdministratorServicies();
             int count = 0;
             count = us.countCourse(count);
+
+            return Ok(count);
+
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("api/getNumbersOfTeacher")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+
+
+        public IHttpActionResult countTeachers()
+        {
+
+            AdministratorServicies us = new AdministratorServicies();
+            int count = 0;
+            count = us.countTeachers(count);
 
             return Ok(count);
 
@@ -87,6 +102,7 @@ namespace PortalStudenti.Controllers
             spec.stergeCont(cont);
             return Ok();
         }
+       
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("api/updateAccountAdmin")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -96,6 +112,7 @@ namespace PortalStudenti.Controllers
             us.updateAccountsAdmin(usr);
             return Ok();
         }
+       
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("api/creeazaSpecializare")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -204,17 +221,31 @@ namespace PortalStudenti.Controllers
             return Json(AdministratorServicies.teacherDetails(id)); // index pags
 
         }
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
         [System.Web.Script.Services.ScriptMethod(UseHttpGet = true)]
         [System.Web.Http.Route("api/getProfilesMembers")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
 
 
-        public IHttpActionResult getProfilesMembers()
+        public IHttpActionResult getProfilesMembers([FromUri] int idSpecializare)
         {
 
-            return Json(AdministratorServicies.getProfileMembers()); // index pags
+            return Json(AdministratorServicies.getProfileMembers(idSpecializare)); // index pags
+
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Script.Services.ScriptMethod(UseHttpGet = true)]
+        [System.Web.Http.Route("api/getAllCourseByIdOfType")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+
+
+        public IHttpActionResult getAllCourseByIdOfType([FromUri] int idSpecializare)
+        {
+
+            return Json(AdministratorServicies.getAllCourseByIdOfType(idSpecializare)); // index pags
 
         }
     }
+
 }

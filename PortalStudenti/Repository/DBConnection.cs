@@ -17,4 +17,4 @@ namespace PortalStudenti.Repository
             return conn;
         }
     }
-}
+} 

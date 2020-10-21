@@ -260,7 +260,7 @@ namespace PortalStudenti.Repository
                         bool conectat = bool.Parse(reader["conectat"].ToString());
                         string statut = reader["statut"].ToString();
                         int idRol = Int32.Parse(reader["id_rol"].ToString());
-                        string numeMaterie = "george";
+                        string numeMaterie = "nume";
                         string denumireRol = reader["denumire"].ToString();
                         user = new ModelUtilizatori(idUtilizator, nume, prenume, email, parola, adresa, numarTelefon, conectat, statut, idRol, numeMaterie, denumireRol);
 
@@ -287,6 +287,7 @@ namespace PortalStudenti.Repository
             }
             return user;
         }
+     
         public List<GradeModel>getStudentGradeByIdOfUser(int idUtilizator)
         {
             SqlConnection conn = db.initializare();

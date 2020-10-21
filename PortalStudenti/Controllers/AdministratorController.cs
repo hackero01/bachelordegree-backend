@@ -1,4 +1,5 @@
 ﻿using PortalStudenti.Models;
+using PortalStudenti.Repository;
 using PortalStudenti.Servicies;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using static PortalStudenti.Models.ModelStudenti;
 using static PortalStudenti.Models.ModelUtilizatori;
 using static PortalStudenti.Models.TeacherModel;
 
@@ -66,6 +68,15 @@ namespace PortalStudenti.Controllers
         {
             AdministratorServicies spec = new AdministratorServicies();
             spec.creeazaUser(spc);
+            return Ok();
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("api/modificaAnul")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult modificaAnul([FromBody] ModificaAnu spc)
+        {
+            AdministratorRepository spec = new AdministratorRepository();
+            spec.modificaAnul(spc);
             return Ok();
         }
         [System.Web.Http.HttpGet]

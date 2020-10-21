@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static PortalStudenti.Models.ModelStudenti;
 using static PortalStudenti.Models.ModelUtilizatori;
 using static PortalStudenti.Models.TeacherModel;
 
@@ -238,6 +239,44 @@ namespace PortalStudenti.Repository
             return cont;
 
 
+        }
+        public string modificaAnul(ModificaAnu an)
+        {
+            SqlConnection conn = db.initializare();
+            SqlCommand cmd;
+            string mesaj = " ";
+
+            try
+            {
+                cmd = new SqlCommand("promoveazaAnu", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                //cmd.Parameters.Add(new SqlParameter("idSpecializare", specializare.idSpecializare));
+                cmd.Parameters.Add(new SqlParameter("@anStudiu", an.anStudiu));
+                cmd.Parameters.Add(new SqlParameter("@id_specializare", an.idSpecializare));
+                cmd.Parameters.Add(new SqlParameter("@nr_credite_necesare", an.nr_credite_necesare));
+
+
+                if (cmd.ExecuteNonQuery() == 1)
+                {
+                    mesaj = "An modificat cu succes";
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
+                conn.Dispose();
+                conn.Close();
+            }
+
+            return mesaj;
         }
         public void stergeCont(DeleteModel cont)
         {

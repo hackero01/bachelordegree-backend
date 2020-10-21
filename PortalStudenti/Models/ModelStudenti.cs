@@ -64,6 +64,13 @@ namespace PortalStudenti.Models
             this.prenume = prenume;
             this.numeSpecializare = numeSpecializare;
         }
+        public class ModificaAnu
+        {
+            public int idSpecializare;
+            public int anStudiu;
+            public int nrCredite;
+            public int nr_credite_necesare;
+        }
 
         public ModelStudenti(int idUtilizator, string nume, string prenume)
         {
